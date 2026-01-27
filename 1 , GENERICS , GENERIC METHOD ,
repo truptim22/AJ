@@ -1,0 +1,82 @@
+//GENERICS
+import java.util.ArrayList;
+import java.util.Iterator;
+
+public class Generic {
+
+    public static void main(String[] args) {
+
+        ArrayList<String> list = new ArrayList<String>();
+
+        list.add("Mohit");
+        list.add("Aman");
+        list.add("Hritik");
+        list.add("Chirag");
+        list.add("Raj");
+
+        String s = list.get(1); // type casting is not required
+        System.out.println("element is: " + s);
+
+        Iterator<String> itr = list.iterator();
+
+        while (itr.hasNext()) {
+            System.out.println(itr.next());
+        }
+    }
+}
+
+
+//GENERIC METHOD 
+public class Genereic1 {
+public static void main(String[] args) {
+DemoClass demo = new DemoClass();
+demo.<String>genericsMethod("Python Programming");
+demo.<Integer>genericsMethod(50);
+}}
+class DemoClass {
+public <T> void genericsMethod(T data) {
+System.out.println("Generics Method:");
+System.out.println("Data passed: " + data);
+}}
+
+
+//WILDCARD IN GENERIC 
+
+class WildcardDemo {
+public static void printList(List<?> list) {
+System.out.println("Printing elements:");
+for (Object obj : list) {
+System.out.println(obj);
+}
+}
+public static double sumOfList(List<? extends Number> list) {
+double sum = 0.0;
+for (Number num : list) {
+sum += num.doubleValue();
+}
+return sum;
+}
+public static void addNumbers(List<? super Integer> list) {
+list.add(10);
+list.add(20);
+list.add(30);
+System.out.println("Numbers added to list.");
+}
+public static void main(String[] args) {
+List<Integer> intList = Arrays.asList(1, 2, 3, 4, 5);
+List<Double> doubleList = Arrays.asList(2.5, 3.7, 1.2);
+List<Object> objList = new ArrayList<>();
+System.out.println("=== Unbounded Wildcard ===");
+printList(intList);
+System.out.println("\n=== Upper Bounded Wildcard ===");
+System.out.println("Sum of doubleList: " + sumOfList(doubleList));
+System.out.println("\n=== Lower Bounded Wildcard ===");
+addNumbers(objList);
+printList(objList);
+}
+}
+
+
+
+
+
