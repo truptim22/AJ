@@ -1,0 +1,46 @@
+import java.util.*;
+
+public class MapOperationsDemo {
+
+    public static void main(String[] args) {
+
+        Map<Integer, String> map1 = new HashMap<Integer, String>();
+        map1.put(1, "Apple");
+        map1.put(2, "Banana");
+        map1.put(3, "Mango");
+
+        System.out.println("Map1 after adding elements:");
+        System.out.println(map1);
+
+        map1.remove(2);
+        System.out.println("\nMap1 after removing key 2:");
+        System.out.println(map1);
+
+        int searchKey = 3;
+        if (map1.containsKey(searchKey)) {
+            System.out.println("\nKey " + searchKey + " found in the map.");
+        } else {
+            System.out.println("\nKey " + searchKey + " not found in the map.");
+        }
+
+        System.out.println("Value of key " + searchKey + ": " + map1.get(searchKey));
+
+        Map<Integer, String> map2 = new HashMap<Integer, String>();
+        map2.put(4, "Orange");
+        map2.put(5, "Grapes");
+
+        System.out.println("\nMap2:");
+        System.out.println(map2);
+
+        map1.putAll(map2);
+        System.out.println("\nMap1 after inserting Map2 elements:");
+        System.out.println(map1);
+
+        System.out.println("\nAll keys and values in Map1:");
+        for (Map.Entry<Integer, String> entry : map1.entrySet()) {
+            System.out.println(
+                "Key: " + entry.getKey() + ", Value: " + entry.getValue()
+            );
+        }
+    }
+}
