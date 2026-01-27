@@ -1,0 +1,61 @@
+import java.util.*;
+
+public class SetIteratorDemo {
+
+    public static void main(String[] args) {
+
+        Set<String> items = new HashSet<String>();
+        items.add("Pen");
+        items.add("Pencil");
+        items.add("Notebook");
+        items.add("Eraser");
+
+        System.out.println("Printing Set elements using Iterator:");
+        Iterator<String> itr = items.iterator();
+        while (itr.hasNext()) {
+            System.out.println(itr.next());
+        }
+
+        List<String> list = new ArrayList<String>(items);
+        ListIterator<String> listItr = list.listIterator(list.size());
+
+        System.out.println("\nPrinting elements in reverse direction:");
+        while (listItr.hasPrevious()) {
+            System.out.println(listItr.previous());
+        }
+    }
+}
+
+
+
+
+
+//set operations
+import java.util.*;
+
+public class SetIteratorDemo {
+
+    public static void main(String[] args) {
+
+        Set<String> items = new HashSet<String>();
+        items.add("Pen");
+        items.add("Pencil");
+        items.add("Notebook");
+        items.add("Eraser");
+
+        System.out.println("Printing Set elements using Iterator:");
+        Iterator<String> itr = items.iterator();
+        while (itr.hasNext()) {
+            System.out.println(itr.next());
+        }
+
+        List<String> list = new ArrayList<String>(items);
+        ListIterator<String> listItr = list.listIterator(list.size());
+
+        System.out.println("\nPrinting elements in reverse direction:");
+        while (listItr.hasPrevious()) {
+            System.out.println(listItr.previous());
+        }
+    }
+}
+
