@@ -82,3 +82,20 @@ public class ReturnLambda {
     }
 }
 
+
+------
+
+
+interface Concat {
+    String join(String a, String b);
+}
+
+public class StringConcatLambda {
+
+    public static void main(String[] args) {
+
+        Concat c = (a, b) -> a + b;
+        System.out.println(c.join("Hello ", "World"));
+    }
+}
+
