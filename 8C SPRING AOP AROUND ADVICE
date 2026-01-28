@@ -1,0 +1,63 @@
+//AccountService.java
+package com.bank.aoparounddemo;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class AccountService {
+
+    public void deposit(int amount) {
+        System.out.println("Depositing amount: ₹" + amount);
+    }
+}
+
+
+//AppConfig.java
+package com.bank.aoparounddemo;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+
+@Configuration
+@ComponentScan(basePackages = "com.bank.aoparounddemo")
+@EnableAspectJAutoProxy
+public class AppConfig {
+}
+
+
+//LoggingAspect.java
+package com.bank.aoparounddemo;
+
+import org.aspectj.lang.ProceedingJoinPoint;
+import org.aspectj.lang.annotation.Around;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
+
+@Aspect
+@Component
+public class LoggingAspect {
+
+    @Around("execution(* com.bank.aoparounddemo.AccountService.deposit(..))")
+    public Object aroundAdvice(ProceedingJoinPoint joinPoint) throws Throwable {
+        System.out.println("Around Advice: Before method execution");
+        Object result = joinPoint.proceed(); // calls target method
+        System.out.println("Around Advice: After method execution");
+        return result;
+    }
+}
+
+//BankApp.java
+package com.bank.aoparounddemo;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class BankApp {
+
+    public static void main(String[] args) {
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        AccountService accountService = context.getBean(AccountService.class);
+        accountService.deposit(3000);
+    }
+}
