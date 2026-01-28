@@ -1,0 +1,85 @@
+// State.java
+package com.codepulse.springexample;
+
+public class State {
+    private String name;
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String s) {
+        this.name = s;
+    }
+}
+
+
+// City.java
+package com.codepulse.springexample;
+
+import org.springframework.beans.factory.annotation.Autowired;
+
+public class City {
+    private int id;
+    private String name;
+
+    @Autowired
+    private State state;
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public State getState() {
+        return state;
+    }
+
+    public void showCityDetails() {
+        System.out.println("City Id : " + id);
+        System.out.println("City Name : " + name);
+        System.out.println("State : " + state.getName());
+    }
+}
+
+
+
+
+
+// DemoApplication.java
+package com.codepulse.springexample;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class DemoApplication {
+    public static void main(String[] args) {
+        ApplicationContext context =
+                new ClassPathXmlApplicationContext("SpringConfig.xml");
+
+        City city = context.getBean("city", City.class);
+        city.setId(1);
+        city.setName("Mumbai");
+        city.getState().setName("Maharashtra");
+        city.showCityDetails();
+    }
+}
+
+
+<!-- SpringConfig.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <bean id="state" class="com.codepulse.springexample.State"/>
+
+    <bean id="city" class="com.codepulse.springexample.City"
+          autowire="byType"/>
+
+</beans>
