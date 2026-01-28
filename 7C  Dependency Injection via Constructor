@@ -1,0 +1,53 @@
+// Employee.java
+package com.spring;
+
+public class Employee {
+    private int id;
+    private String name;
+
+    // Constructor for DI
+    public Employee(int id, String name) {
+        this.id = id;
+        this.name = name;
+    }
+
+    public void display() {
+        System.out.println("Employee ID: " + id);
+        System.out.println("Employee Name: " + name);
+    }
+}
+
+
+<!-- config.xml -->
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+    <!-- Constructor-Based Dependency Injection -->
+    <bean id="employeeBean" class="com.spring.Employee">
+        <constructor-arg value="101"/>
+        <constructor-arg value="SAYALI"/>
+    </bean>
+
+</beans>
+
+
+
+// MainApp.java
+package com.spring;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class MainApp {
+    public static void main(String[] args) {
+        ApplicationContext context =
+                new ClassPathXmlApplicationContext("config.xml");
+
+        Employee emp = (Employee) context.getBean("employeeBean");
+        emp.display();
+    }
+}
