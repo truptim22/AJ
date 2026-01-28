@@ -1,0 +1,102 @@
+<%@ page language="java"
+    contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Application for Change of Study Center</title>
+
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        table {
+            border-collapse: collapse;
+            width: 500px;
+        }
+        td {
+            padding: 6px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Application Form for Change of Study Center</h2>
+
+<form method="post">
+    <table border="1">
+
+        <tr>
+            <td>Enrollment No</td>
+            <td><input type="text" name="enroll" required></td>
+        </tr>
+
+        <tr>
+            <td>Student Name</td>
+            <td><input type="text" name="name" required></td>
+        </tr>
+
+        <tr>
+            <td>Programme</td>
+            <td>
+                <select name="program">
+                    <option>BCA</option>
+                    <option>MCA</option>
+                    <option>BSc</option>
+                    <option>MSc</option>
+                </select>
+            </td>
+        </tr>
+
+        <tr>
+            <td>Current Study Center</td>
+            <td><input type="text" name="currentCenter"></td>
+        </tr>
+
+        <tr>
+            <td>Requested Study Center</td>
+            <td><input type="text" name="newCenter"></td>
+        </tr>
+
+        <tr>
+            <td>Reason for Change</td>
+            <td>
+                <textarea name="reason" rows="3" cols="20"></textarea>
+            </td>
+        </tr>
+
+        <tr>
+            <td colspan="2" align="center">
+                <input type="submit" value="Submit Application">
+                <input type="reset" value="Clear">
+            </td>
+        </tr>
+
+    </table>
+</form>
+
+<hr>
+
+<%
+if (request.getParameter("enroll") != null) {
+%>
+
+<h3>Application Submitted Successfully</h3>
+
+<p><b>Enrollment No:</b> <%= request.getParameter("enroll") %></p>
+<p><b>Student Name:</b> <%= request.getParameter("name") %></p>
+<p><b>Programme:</b> <%= request.getParameter("program") %></p>
+<p><b>Current Study Center:</b> <%= request.getParameter("currentCenter") %></p>
+<p><b>Requested Study Center:</b> <%= request.getParameter("newCenter") %></p>
+<p><b>Reason:</b> <%= request.getParameter("reason") %></p>
+
+<p><i>Your request will be processed by the university administration.</i></p>
+
+<%
+}
+%>
+
+</body>
+</html>
