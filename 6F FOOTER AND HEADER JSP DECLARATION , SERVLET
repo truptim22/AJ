@@ -1,0 +1,51 @@
+//HEADER 
+
+<%@ page language="java" %>
+<html>
+<head>
+    <title>JSP Demo</title>
+</head>
+<body>
+<hr>
+<h2 align="center">Welcome to JSP Demo Page</h2>
+<hr>
+
+
+//FOOTER.JSP
+
+<hr>
+<footer>
+    <p>&copy; 2025 JSP Demo Application</p>
+</footer>
+</body>
+</html>
+
+//MAININDEX.JSP
+<%@ page language="java" contentType="text/html" %>
+
+<%@ include file="header.jsp" %>
+
+<%-- JSP Declaration --%>
+<%!
+    int a = 10;
+    int b = 20;
+
+    int add() {
+        return a + b;
+    }
+%>
+
+<%-- JSP Scriptlet --%>
+<%
+    String name = "Student";
+    int result = add();
+%>
+
+<h3>JSP Elements Demonstration</h3>
+
+<%-- JSP Expression --%>
+<p>Name: <%= name %></p>
+<p>Addition Result: <%= result %></p>
+<p>Current Date & Time: <%= new java.util.Date() %></p>
+
+<%@ include file="footer.jsp" %>
