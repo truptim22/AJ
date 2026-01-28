@@ -61,3 +61,11 @@ public class BankService {
         System.out.println("Amount withdrawn successfully.");
     }
 }
+
+
+
+OUTPUT:
+Withdrawing amount: RS 5000
+Amount withdrawn successfully.
+After Advice: Transaction completed. Logging details...
+
