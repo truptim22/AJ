@@ -1,0 +1,63 @@
+// BankMainApp.java
+package com.bank.prac8b;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class BankMainApp {
+
+    public static void main(String[] args) {
+        ApplicationContext context =
+                new AnnotationConfigApplicationContext(AppConfig.class);
+
+        BankService bankServiceObj = context.getBean(BankService.class);
+        bankServiceObj.withdrawAmount(5000);
+    }
+}
+
+
+// AppConfig.java
+package com.bank.prac8b;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+
+@Configuration
+@ComponentScan(basePackages = "com.bank.prac8b")
+@EnableAspectJAutoProxy
+public class AppConfig {
+}
+
+
+// TransactionAspect.java
+package com.bank.prac8b;
+
+import org.aspectj.lang.annotation.After;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
+
+@Aspect
+@Component
+public class TransactionAspect {
+
+    @After("execution(* com.bank.prac8b.BankService.withdrawAmount(..))")
+    public void afterAdvice() {
+        System.out.println("After Advice: Transaction completed. Logging details...");
+    }
+}
+
+
+// BankService.java
+package com.bank.prac8b;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class BankService {
+
+    public void withdrawAmount(int amount) {
+        System.out.println("Withdrawing amount: RS " + amount);
+        System.out.println("Amount withdrawn successfully.");
+    }
+}
