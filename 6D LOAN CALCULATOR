@@ -1,0 +1,113 @@
+//index.jsp 
+<%@ page import="java.text.DecimalFormat" %>
+<%@ page language="java"
+    contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Loan Calculator</title>
+
+    <style>
+        table {
+            border-collapse: collapse;
+            width: 90%;
+        }
+        th, td {
+            border: 1px solid black;
+            padding: 6px;
+            text-align: right;
+        }
+        th {
+            background-color: #f2f2f2;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2>Loan Calculator</h2>
+
+<form method="post">
+    Principal Amount:
+    <input type="number" name="principal" required><br><br>
+
+    Period (Years):
+    <input type="number" name="years" required><br><br>
+
+    <input type="submit" value="Calculate">
+</form>
+
+<hr>
+
+<%
+if (request.getParameter("principal") != null) {
+
+    double principal = Double.parseDouble(request.getParameter("principal"));
+    int years = Integer.parseInt(request.getParameter("years"));
+    double rate = 0;
+
+    if (years >= 1 && years <= 7)
+        rate = 5.35;
+    else if (years >= 8 && years <= 15)
+        rate = 5.5;
+    else if (years >= 16 && years <= 30)
+        rate = 5.75;
+
+    double monthlyRate = rate / 12 / 100;
+    int months = years * 12;
+
+    double emi = (principal * monthlyRate * Math.pow(1 + monthlyRate, months))
+               / (Math.pow(1 + monthlyRate, months) - 1);
+
+    DecimalFormat df = new DecimalFormat("0.00");
+%>
+
+<h3>Loan Details</h3>
+
+<p>Principal Amount: <b><%= df.format(principal) %></b></p>
+<p>Loan Period: <b><%= years %> years</b></p>
+<p>Interest Rate: <b><%= rate %> %</b></p>
+<p>Monthly EMI: <b><%= df.format(emi) %></b></p>
+
+<h3>Payment Schedule</h3>
+
+<table>
+    <tr>
+        <th>Payment No</th>
+        <th>EMI</th>
+        <th>Interest Paid</th>
+        <th>Principal Paid</th>
+        <th>Balance</th>
+    </tr>
+
+<%
+    double balance = principal;
+
+    for (int i = 1; i <= months; i++) {
+        double interest = balance * monthlyRate;
+        double principalPaid = emi - interest;
+        balance -= principalPaid;
+%>
+
+    <tr>
+        <td style="text-align:center;"><%= i %></td>
+        <td><%= df.format(emi) %></td>
+        <td><%= df.format(interest) %></td>
+        <td><%= df.format(principalPaid) %></td>
+        <td><%= df.format(Math.abs(balance)) %></td>
+    </tr>
+
+<%
+    }
+}
+%>
+
+
+
+
+</table>
+
+</body>
+</html>
