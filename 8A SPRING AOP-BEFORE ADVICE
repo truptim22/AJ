@@ -27,3 +27,8 @@ public class LoggingAspect {
         System.out.println("Before Advice: Logging student registration...");
     }
 }
+
+OUTPUT:
+Before Advice: Logging student registration...
+Student registration completed.
+
