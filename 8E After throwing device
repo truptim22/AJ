@@ -1,0 +1,83 @@
+//Calculator.java
+package com.demo.app;
+
+public interface Calculator {
+    int divide(int a, int b);
+}
+
+//CalculatorImpl.java
+package com.demo.app;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class CalculatorImpl implements Calculator {
+
+    @Override
+    public int divide(int a, int b) {
+        System.out.println("Inside divide() method");
+        return a / b; // will throw exception when b = 0
+    }
+}
+
+//LoggingAspect.java
+package com.demo.app;
+
+import org.aspectj.lang.annotation.AfterThrowing;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
+
+@Aspect
+@Component
+public class LoggingAspect {
+
+    @AfterThrowing(
+        pointcut = "execution(* com.demo.app.Calculator.divide(..))",
+        throwing = "ex"
+    )
+    public void logException(Exception ex) {
+        System.out.println("After Throwing Advice executed");
+        System.out.println("Exception: " + ex.getMessage());
+    }
+}
+
+//AppConfig.java
+package com.demo.app;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+
+@Configuration
+@ComponentScan("com.demo.app")
+@EnableAspectJAutoProxy
+public class AppConfig {
+}
+
+//CalculatorMain.java
+package com.demo.app;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class CalculatorMain {
+
+    public static void main(String[] args) {
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        Calculator cal = context.getBean(Calculator.class);
+
+        try {
+            cal.divide(10, 0);
+        } catch (Exception e) {
+            System.out.println("Exception handled in main method");
+        }
+    }
+}
+
+
+Output:
+
+Inside divide() method
+After Throwing Advice executed
+Exception: / by zero
+Exception handled in main method
