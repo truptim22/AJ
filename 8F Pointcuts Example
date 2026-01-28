@@ -1,0 +1,80 @@
+//Calculator.java
+package com.demo.app;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class Calculator {
+
+    public void add(int a, int b) {
+        System.out.println("Addition: " + (a + b));
+    }
+
+    public void divide(int a, int b) {
+        System.out.println("Division: " + (a / b));
+    }
+}
+
+//LoggingAspect.java
+package com.demo.app;
+
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
+import org.springframework.stereotype.Component;
+
+@Aspect
+@Component
+public class LoggingAspect {
+
+    // 1. Pointcut definition
+    @Pointcut("execution(* com.demo.app.Calculator.*(..))")
+    public void calculatorMethods() {
+        // Pointcut signature method (empty body)
+    }
+
+    // 2. Before advice using the pointcut
+    @Before("calculatorMethods()")
+    public void beforeAdvice() {
+        System.out.println("Before advice executed using pointcut");
+    }
+}
+
+//AppConfig.java
+package com.demo.app;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+
+@Configuration
+@ComponentScan("com.demo.app")
+@EnableAspectJAutoProxy
+public class AppConfig {
+}
+
+//CalculatorMain.java
+package com.demo.app;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class CalculatorMain {
+
+    public static void main(String[] args) {
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        Calculator calObj = context.getBean(Calculator.class);
+
+        // Call methods
+        calObj.add(10, 20);
+        calObj.divide(10, 2);
+    }
+}
+
+
+Output:
+
+Before advice executed using pointcut
+Addition: 30
+Before advice executed using pointcut
+Division: 5
