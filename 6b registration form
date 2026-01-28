@@ -1,0 +1,111 @@
+//register.jsp  (registration form)
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Form</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        form {
+            width: 400px;
+            margin: auto;
+        }
+        label {
+            display: inline-block;
+            width: 120px;
+        }
+        input, select, textarea {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+
+<body>
+
+<h2 align="center">Registration Form</h2>
+
+<form action="register.jsp" method="post">
+
+    <label>Name:</label>
+    <input type="text" name="name" required><br>
+
+    <label>Email:</label>
+    <input type="email" name="email" required><br>
+
+    <label>Password:</label>
+    <input type="password" name="password" required><br>
+
+    <label>Gender:</label>
+    <input type="radio" name="gender" value="Male"> Male
+    <input type="radio" name="gender" value="Female"> Female<br>
+
+    <label>Course:</label>
+    <select name="course">
+        <option value="Java">Java</option>
+        <option value="Python">Python</option>
+        <option value="Web Development">Web Development</option>
+    </select><br>
+
+    <label>Address:</label>
+    <textarea name="address" rows="3" cols="20"></textarea><br>
+
+    <input type="submit" value="Register">
+    <input type="reset" value="Clear">
+
+</form>
+
+</body>
+</html>
+
+-------
+
+//register_display.jsp ( registration display)
+
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8" %>
+
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Registration Details</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+        }
+        .box {
+            width: 400px;
+            margin: auto;
+            border: 1px solid #333;
+            padding: 15px;
+        }
+    </style>
+</head>
+
+<body>
+
+<div class="box">
+    <h2>Registration Successful</h2>
+
+    <%
+        String name = request.getParameter("name");
+        String email = request.getParameter("email");
+        String password = request.getParameter("password");
+        String gender = request.getParameter("gender");
+        String course = request.getParameter("course");
+        String address = request.getParameter("address");
+    %>
+
+    <p><b>Name:</b> <%= name %></p>
+    <p><b>Email:</b> <%= email %></p>
+    <p><b>Password:</b> <%= password %></p>
+    <p><b>Gender:</b> <%= gender %></p>
+    <p><b>Course:</b> <%= course %></p>
+    <p><b>Address:</b> <%= address %></p>
+</div>
+
+</body>
+</html>
