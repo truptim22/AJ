@@ -1,0 +1,78 @@
+//AppConfig.java
+package com.demo.app;
+
+import org.springframework.context.annotation.ComponentScan;
+import org.springframework.context.annotation.Configuration;
+import org.springframework.context.annotation.EnableAspectJAutoProxy;
+
+@Configuration
+@ComponentScan("com.demo.app")
+@EnableAspectJAutoProxy
+public class AppConfig {
+}
+
+//Calculator.java
+package com.demo.app;
+
+public interface Calculator {
+    int add(int a, int b);
+}
+
+//CalculatorImpl.java
+package com.demo.app;
+
+import org.springframework.stereotype.Component;
+
+@Component
+public class CalculatorImpl implements Calculator {
+
+    @Override
+    public int add(int a, int b) {
+        System.out.println("Inside add() method");
+        return a + b;
+    }
+}
+
+//LoggingAspect.java
+package com.demo.app;
+
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.springframework.stereotype.Component;
+
+@Aspect
+@Component
+public class LoggingAspect {
+
+    @AfterReturning(
+        pointcut = "execution(* com.demo.app.Calculator.add(..))",
+        returning = "result"
+    )
+    public void afterReturningAdvice(int result) {
+        System.out.println("After Returning Advice executed");
+        System.out.println("Returned value is: " + result);
+    }
+}
+
+//CalculatorMain.java
+package com.demo.app;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+
+public class CalculatorMain {
+
+    public static void main(String[] args) {
+        ApplicationContext context = new AnnotationConfigApplicationContext(AppConfig.class);
+        Calculator c1Obj = context.getBean(Calculator.class);
+        int result = c1Obj.add(5, 10);
+        System.out.println("Result in Main Method: " + result);
+    }
+}
+
+
+OUTPUT: 
+Inside add() method
+After Returning Advice executed
+Returned value is: 15
+Result in Main Method: 15
