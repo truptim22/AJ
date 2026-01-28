@@ -1,0 +1,51 @@
+//HELLO WORLD.JAVA
+package spring_example;
+public class HelloWorld {
+    private String message;
+    // Setter method
+    public void setMessage(String message) {
+        this.message = message;
+    }
+    // Getter method
+    public void getMessage() {
+        System.out.println("Message : " + message);
+    }
+}
+
+//MAIN.JAVA
+package spring_example;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class Main {
+
+    public static void main(String[] args) {
+
+        ApplicationContext context =
+            new ClassPathXmlApplicationContext("beans.xml");
+
+        HelloWorld obj = (HelloWorld) context.getBean("HelloWorld");
+        obj.getMessage();
+    }
+}
+
+
+//BEANS.XML
+
+<?xml version="1.0" encoding="UTF-8"?>
+
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xsi:schemaLocation="
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans-3.0.xsd">
+
+    <bean id="HelloWorld" class="spring_example.HelloWorld">
+        <property name="message" value="Hello World!"/>
+    </bean>
+
+</beans>
+
+
+
